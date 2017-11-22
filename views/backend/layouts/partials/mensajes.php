@@ -1,8 +1,10 @@
 <?php
+ob_start();
 session_start();
 if(!$_SESSION["validar"]){
 	header("location:ingreso");
 	exit();
+	ob_end_clean();
 }
 include "views/backend/layouts/partials/botonera.php";
 include "views/backend/layouts/partials/cabezote.php";
