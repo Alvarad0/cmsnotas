@@ -55,14 +55,44 @@ $("#columnasSlide").on("drop", function (e) {
                     }else{
                         console.log("ruta" + respuesta["ruta"])
                         $("#columnasSlide").css({"height" : "auto"});
-                        $("#columnasSlide").append('<li class="bloqueSlide">\n' +
-                        '                            <span class="fa fa-times"></span>\n' +
-                        '                            <img src="' + respuesta["ruta"].slice(8) + '" class="handleImg">\n' +
-                        '                            </li>')
-
+                        $("#columnasSlide").append('<li id="'+ respuesta["id"] +'" class="bloqueSlide"><span class="fa fa-times eliminarSlide"></span><img src="' + respuesta["ruta"].slice(8) + '" class="handleImg"></li>')
                         $("#ordenarTextSlide").append('<li><span class="fa fa-pencil" style="background: blue"></span><img src="'+respuesta["ruta"].slice(8)+'" style="float: left; margin-bottom: 10px" width="80%"><h1>'+respuesta["titulo"]+'</h1><p>'+respuesta["descripcion"]+'</p></li>')
+                        swal({
+                            title: "Correcto!",
+                            text: "La imagen se ha cargado",
+                            type: "success",
+                            confirmButtonText: "Cerrar",
+                            CloseOnConfirm: false
+                        },
+                            function(isConfirm){
+                            if(isConfirm){
+                                window.location = "slide"
+                            }
+                            })
                     }
                 }
             });
     }
 })
+//Eliminar Slide
+    $(".eliminarSlide").click(function () {
+        idSlide = $(this).parent().attr("id");
+        rutaSlide = $(this).attr("ruta");
+        console.log(idSlide)
+        $(this).parent().remove();
+        $("#item" + idSlide).remove();
+        var borrarItemSlide = new FormData();
+        borrarItemSlide.append("idSlide", idSlide);
+        borrarItemSlide.append("rutaSlide", rutaSlide);
+        $.ajax({
+            url: "views/assets/ajax/gestorSlide.php",
+            method: "POST",
+            data: borrarItemSlide,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (respuesta) {
+                console.log(respuesta);
+            }
+        })
+    })

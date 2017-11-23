@@ -18,10 +18,28 @@ class Ajax{
         $respuesta = (new SlideController)->subirImagenController($datos);
         echo $respuesta;
     }
+    #Eliminar Item Slide
+    public $idSlide;
+    public $rutaSlide;
+    public function eliminarItemSlideAjax(){
+        $datos = array("idSlide" => $this->idSlide, "rutaSlide" => $this->rutaSlide);
+        $respuesta = (new SlideController)->eliminarItemSlideController($datos);
+        echo $respuesta;
+    }
 }
 
-//Objecto Subir Imagen
-$a = new Ajax();
-$a -> nombreImagen = $_FILES["imagen"]["name"];
-$a -> imagenTemporal = $_FILES["imagen"]["tmp_name"];
-$a -> gestorSlideAjax();
+#Objecto Subir Imagen
+if (isset($_FILES["imagen"]["name"])){
+    $a = new Ajax();
+    $a -> nombreImagen = $_FILES["imagen"]["name"];
+    $a -> imagenTemporal = $_FILES["imagen"]["tmp_name"];
+    $a -> gestorSlideAjax();
+}
+
+#Objecto Eliminar Item Slide
+if(isset($_POST["idSlide"])){
+    $b = new Ajax();
+    $b->idSlide = $_POST["idSlide"];
+    $b->rutaSlide = $_POST["rutaSlide"];
+    $b->eliminarItemSlideAjax();
+}

@@ -20,12 +20,12 @@ class SlideController{
             $destino = imagecrop($origen, ["x" => 0, "y" => 0, "width" => 1600, "height" => 600]);
             imagejpeg($destino, $ruta);
             (new SlideModel)->subirImagenModel($ruta, "slide");
-            $respuesta = (new SlideModel)->mostrarImagenController($ruta, "slide");
+            $respuesta = (new SlideModel)->mostrarImagenModel($ruta, "slide");
             if(empty($respuesta["titulo"]))
                 $respuesta["titulo"]="";
             if(empty($respuesta["descripcion"]))
                 $respuesta["descripcion"]="";
-            $enviarDatos = array("ruta" => $respuesta["ruta"], "titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
+            $enviarDatos = array("id" => $respuesta["id"], "ruta" => $respuesta["ruta"], "titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
             return $respuesta = json_encode($enviarDatos);
         }
     }
@@ -33,18 +33,25 @@ class SlideController{
     public function mostrarImagenesController(){
         $respuesta = (new SlideModel)->mostrarImagenesModel("slide");
         foreach ($respuesta as $row => $item)
-        echo '<li class="bloqueSlide">
-              <span class="fa fa-times"></span>
+        echo '<li id="'. $item["id"] .'" class="bloqueSlide">
+              <span class="fa fa-times eliminarSlide" ruta = "'. $item["ruta"] .'"></span>
               <img src="'. substr($item["ruta"], 8) .'" class="handleImg"></li>';
     }
 
     public function editorSlideController(){
         $respuesta = (new SlideModel)->mostrarImagenesModel("slide");
         foreach ($respuesta as $row => $item)
-            echo '<li>
+            echo '<li id="item'.$item["id"].'">
 			      <span class="fa fa-pencil" style="background:blue"></span>
 			      <img src="'. substr($item["ruta"], 8) .'" style="float:left; margin-bottom:10px" width="80%">
 			      <h1>'. $item["titulo"]. '</h1>
 			      <p>'. $item["descripcion"] .'</p></li>';
+    }
+
+    #Eliminar Item Slide
+    public function eliminarItemSlideController($datosController){
+        $respuesta = (new SlideModel)->eliminarItemSlideModel($datosController, "slide");
+        unlink($datosController["rutaSlide"]);
+        return $respuesta;
     }
 }

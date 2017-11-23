@@ -19,8 +19,8 @@ class SlideModel{
         $stmt->close();
     }
 
-    public function mostrarImagenController($ruta, $tabla){
-        $stmt = (new Conexion)->con()->prepare("SELECT ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
+    public function mostrarImagenModel($ruta, $tabla){
+        $stmt = (new Conexion)->con()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
         $stmt->bindParam(":ruta", $ruta, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
@@ -29,9 +29,22 @@ class SlideModel{
 
     #Visualizar todas las imagenes de la BD que pertenecen al Slide
     public function mostrarImagenesModel($tabla){
-        $stmt = (new Conexion)->con()->prepare("SELECT ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC ");
+        $stmt = (new Conexion)->con()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC ");
         $stmt->execute();
         return $stmt->fetchAll();
         $stmt->close();
+    }
+
+    #Eliminar Item Slide
+    public function eliminarItemSlideModel($datosModel, $tabla){
+        $stmt = (new Conexion)->con()->prepare("DELETE FROM slide where id = :id");
+        $stmt->bindParam(":id", $datosModel["idSlide"], PDO::PARAM_INT);
+        if($stmt->execute()){
+            return "ok";
+        }else{
+            return "error";
+        }
+        $stmt->close();
+
     }
 }
