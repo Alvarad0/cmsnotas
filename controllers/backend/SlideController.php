@@ -6,6 +6,7 @@
  * Time: 10:18 AM
  */
 class SlideController{
+    #Cargar y Mostrar Imagen del Slide
     public function subirImagenController($datosController){
         $tamaño = getimagesize($datosController["imagenTemporal"]);
         //var_dump($tamaño);
@@ -22,5 +23,23 @@ class SlideController{
             $enviarDatos = Array("ruta" => $respuesta["ruta"]);
             return $respuesta = json_encode($enviarDatos);
         }
+    }
+    #Visualizar todas las imagenes de la BD que pertenecen al Slide
+    public function mostrarImagenesController(){
+        $respuesta = (new SlideModel)->mostrarImagenesModel("slide");
+        foreach ($respuesta as $row => $item)
+        echo '<li class="bloqueSlide">
+              <span class="fa fa-times"></span>
+              <img src="'. substr($item["ruta"], 8) .'" class="handleImg"></li>';
+    }
+
+    public function editorSlideController(){
+        $respuesta = (new SlideModel)->mostrarImagenesModel("slide");
+        foreach ($respuesta as $row => $item)
+            echo '<li>
+			      <span class="fa fa-pencil" style="background:blue"></span>
+			      <img src="'. substr($item["ruta"], 8) .'" style="float:left; margin-bottom:10px" width="80%">
+			      <h1>'. $item["titulo"]. '</h1>
+			      <p>'. $item["descripcion"] .'</p></li>';
     }
 }

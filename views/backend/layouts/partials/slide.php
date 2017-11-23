@@ -12,6 +12,10 @@ include "views/backend/layouts/partials/cabezote.php";
 <hr>
 <p><span class="fa fa-arrow-down"></span>  Arrastra aquí tu imagen, tamaño recomendado: 1600px * 600px</p>
 	<ul id="columnasSlide">
+        <?php
+        $respuesta = new SlideController();
+        $respuesta->mostrarImagenesController();
+        ?>
 	</ul>
 	<button id="ordenarSlide" class="btn btn-warning pull-right" style="margin:10px 30px">Ordenar Slides</button>
 	<button id="guardarSlide" class="btn btn-primary pull-right" style="display:none; margin:10px 30px">Guardar Orden Slides</button>
@@ -19,42 +23,10 @@ include "views/backend/layouts/partials/cabezote.php";
 <div id="textoSlide" class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
 <hr>
 	<ul id="ordenarTextSlide">
-		<!--<li>
-			<span class="fa fa-pencil" style="background:blue"></span>
-			<img src="/views/assets/images/backend/slide/slide01.jpg" style="float:left; margin-bottom:10px" width="80%">
-			<h1>Lorem Ipsum</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-		</li>
-		<li>
-			<img src="/views/assets/images/backend/slide/slide02.jpg" class="img-thumbnail">
-			<input type="text" class="form-control" placeholder="Título">
-			<textarea row="5" class="form-control" placeholder="Descripción"></textarea>
-			<button class="btn btn-info pull-right" style="margin:10px">Guardar</button>
-		</li>
-		<li>
-			<img src="/views/assets/images/backend/slide/slide03.jpg" class="img-thumbnail">
-			<input type="text" class="form-control" placeholder="Título">
-			<textarea row="5" class="form-control" placeholder="Descripción"></textarea>
-			<button class="btn btn-info pull-right" style="margin:10px">Guardar</button>
-		</li>
-		<li>
-			<span class="fa fa-pencil" style="background:blue"></span>
-			<img src="/views/assets/images/backend/slide/slide04.jpg" style="float:left; margin-bottom:10px" width="80%">
-			<h1>Lorem Ipsum</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-		</li>
-		<li>
-			<img src="/views/assets/images/backend/slide/slide01.jpg" class="img-thumbnail">
-			<input type="text" class="form-control" placeholder="Título">
-			<textarea row="5" class="form-control" placeholder="Descripción"></textarea>
-			<button class="btn btn-info pull-right" style="margin:10px">Guardar</button>
-		</li>
-		<li>
-			<img src="/views/assets/images/backend/slide/slide02.jpg" class="img-thumbnail">
-			<input type="text" class="form-control" placeholder="Título">
-			<textarea row="5" class="form-control" placeholder="Descripción"></textarea>
-			<button class="btn btn-info pull-right" style="margin:10px">Guardar</button>
-		</li>-->
+        <?php
+        $respuesta = new SlideController();
+        $respuesta->editorSlideController();
+        ?>
 	</ul>
 </div>
 <!--<div id="slide" class="col-lg-10 col-md-10 col-sm-9 col-xs-12">

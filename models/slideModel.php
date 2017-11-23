@@ -20,10 +20,18 @@ class SlideModel{
     }
 
     public function mostrarImagenController($ruta, $tabla){
-        $stmt = (new Conexion)->con()->prepare("SELECT ruta FROM $tabla WHERE ruta = :ruta");
+        $stmt = (new Conexion)->con()->prepare("SELECT ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
         $stmt->bindParam(":ruta", $ruta, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
+        $stmt->close();
+    }
+
+    #Visualizar todas las imagenes de la BD que pertenecen al Slide
+    public function mostrarImagenesModel($tabla){
+        $stmt = (new Conexion)->con()->prepare("SELECT ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC ");
+        $stmt->execute();
+        return $stmt->fetchAll();
         $stmt->close();
     }
 }

@@ -8,6 +8,7 @@
 require_once "../../../models/slideModel.php";
 require_once "../../../controllers/backend/SlideController.php";
 
+#Clase para subir imagen y previamente visualizarla
 class Ajax{
     public $nombreImagen; //Nombre Original de la Imagen
     public $imagenTemporal; //Imagen Original
@@ -19,7 +20,7 @@ class Ajax{
     }
 }
 
-//Objecto Imgen
+//Objecto Subir Imagen
 $a = new Ajax();
 $a -> nombreImagen = $_FILES["imagen"]["name"];
 $a -> imagenTemporal = $_FILES["imagen"]["tmp_name"];
