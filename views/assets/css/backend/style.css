@@ -123,6 +123,11 @@ INICIO
 /*=============================================
 SLIDE            
 =============================================*/
+#status{
+	position: relative;
+	display: block;
+	margin: auto;
+}
 
 #slide{
 	position: relative;	

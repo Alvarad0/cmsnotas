@@ -8,7 +8,7 @@
 require_once "conexion.php";
 
 class SlideModel{
-    public function mostrarImagenModel($datosModel, $tabla){
+    public function subirImagenModel($datosModel, $tabla){
         $stmt =  (new Conexion)->con()->prepare("INSERT INTO $tabla (ruta) VALUE (:ruta)");
         $stmt->bindParam(":ruta", $datosModel, PDO::PARAM_STR);
         if($stmt->execute()){
@@ -16,6 +16,14 @@ class SlideModel{
         }else{
             return "error";
         }
+        $stmt->close();
+    }
+
+    public function mostrarImagenController($ruta, $tabla){
+        $stmt = (new Conexion)->con()->prepare("SELECT ruta FROM $tabla WHERE ruta = :ruta");
+        $stmt->bindParam(":ruta", $ruta, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
         $stmt->close();
     }
 }

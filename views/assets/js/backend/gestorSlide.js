@@ -44,17 +44,20 @@ $("#columnasSlide").on("drop", function (e) {
                 cache: false,
                 contentType: false,
                 processData: false,
+                dataType: "json",
                 beforeSend: function () {
                     $("#columnasSlide").before('<img src="views/assets/images/backend/status.gif" id="status">');
                 },
                 success: function (respuesta) {
+                    $("#status").remove();
                     if(respuesta == 0){
                         $("#columnasSlide").before('<div class = "alert alert-warning status text-center">La imagen es inferior a 1600px X 600px')
                     }else{
-                        console.log(respuesta)
+                        console.log("ruta" + respuesta["ruta"])
+                        $("#columnasSlide").css({"height" : "auto"});
                     $("#columnasSlide").append('<li class="bloqueSlide">\n' +
                         '                            <span class="fa fa-times"></span>\n' +
-                        '                            <img src="" class="handleImg">\n' +
+                        '                            <img src="' + respuesta["ruta"].slice(8) + '" class="handleImg">\n' +
                         '                            </li>')
                     }
                 }

@@ -14,7 +14,7 @@ class Ajax{
 
     public function gestorSlideAjax(){
         $datos = array("nombreImagen" => $this->nombreImagen, "imagenTemporal" => $this->imagenTemporal);
-        $respuesta = (new SlideController)->mostrarImagenController($datos);
+        $respuesta = (new SlideController)->subirImagenController($datos);
         echo $respuesta;
     }
 }

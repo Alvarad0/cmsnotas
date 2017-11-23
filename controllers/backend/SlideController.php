@@ -6,7 +6,7 @@
  * Time: 10:18 AM
  */
 class SlideController{
-    public function mostrarImagenController($datosController){
+    public function subirImagenController($datosController){
         $tamaño = getimagesize($datosController["imagenTemporal"]);
         //var_dump($tamaño);
         list($ancho, $alto) = getimagesize($datosController["imagenTemporal"]);
@@ -17,8 +17,10 @@ class SlideController{
             $ruta = "../../../views/assets/images/backend/slide/slide" . $aleatorio . ".jpg";
             $origen = imagecreatefromjpeg($datosController["imagenTemporal"]);
             imagejpeg($origen, $ruta);
-            $respuesta = (new SlideModel)->mostrarImagenModel($ruta, "slide");
-            return $respuesta;
+            (new SlideModel)->subirImagenModel($ruta, "slide");
+            $respuesta = (new SlideModel)->mostrarImagenController($ruta, "slide");
+            $enviarDatos = Array("ruta" => $respuesta["ruta"]);
+            return $respuesta = json_encode($enviarDatos);
         }
     }
 }
