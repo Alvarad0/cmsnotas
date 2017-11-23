@@ -7,6 +7,9 @@
  */
 require_once "models/enlaces.php";
 require_once "models/ingreso.php";
+require_once "models/slideModel.php";
+
+require_once "controllers/backend/SlideController.php";
 require_once "controllers/backend/TemplateController.php";
 require_once "controllers/backend/EnlacesController.php";
 require_once "controllers/backend/IngresoControllers.php";

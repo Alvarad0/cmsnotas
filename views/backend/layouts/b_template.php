@@ -36,5 +36,6 @@
 </div>
 <script src="views/assets/js/backend/script.js"></script>
 <script src="views/assets/js/backend/validarIngreso.js"></script>
+<script src="views/assets/js/backend/gestorSlide.js"></script>
 </body>
 </html>
