@@ -17,10 +17,15 @@ class SlideController{
             $aleatorio = mt_rand(100, 999);
             $ruta = "../../../views/assets/images/backend/slide/slide" . $aleatorio . ".jpg";
             $origen = imagecreatefromjpeg($datosController["imagenTemporal"]);
-            imagejpeg($origen, $ruta);
+            $destino = imagecrop($origen, ["x" => 0, "y" => 0, "width" => 1600, "height" => 600]);
+            imagejpeg($destino, $ruta);
             (new SlideModel)->subirImagenModel($ruta, "slide");
             $respuesta = (new SlideModel)->mostrarImagenController($ruta, "slide");
-            $enviarDatos = Array("ruta" => $respuesta["ruta"]);
+            if(empty($respuesta["titulo"]))
+                $respuesta["titulo"]="";
+            if(empty($respuesta["descripcion"]))
+                $respuesta["descripcion"]="";
+            $enviarDatos = array("ruta" => $respuesta["ruta"], "titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
             return $respuesta = json_encode($enviarDatos);
         }
     }
