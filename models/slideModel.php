@@ -83,6 +83,7 @@ class SlideModel{
     }
 
     #Mostrar imagenes del slide de acuerdo al orden asignado
+    #Mostrar imagenes en el Slide del Fron-End
     public function itemSlideOrneadosModel($tabla){
         $stmt = (new Conexion)->con()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC");
         $stmt->execute();

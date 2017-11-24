@@ -75,4 +75,18 @@ class SlideController{
 			      <p>'. $item["descripcion"] .'</p></li>';
         }
     }
+
+    #Mostrar imagenes en el Slide del Fron-End
+    public function cargarSlideController(){
+        $respuesta = (new SlideModel)->itemSlideOrneadosModel("slide");
+        foreach ($respuesta as $row => $item){
+            echo '<li>
+	           	<img src="'. substr($item["ruta"], 9) .'">
+	           	<div class="slideCaption">
+	           		<h3>'. $item["titulo"] .'</h3>
+			   		<p>'. $item["descripcion"] .'</p>
+	           	</div>
+	           </li>';
+        }
+    }
 }
