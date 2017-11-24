@@ -68,4 +68,25 @@ class SlideModel{
         return $stmt->fetch();
         $stmt->close();
     }
+
+    #Guardar Orden del Slide
+    public function guardarOrdenItemSlideModel($datosModel, $tabla){
+        $stmt = (new Conexion)->con()->prepare("UPDATE $tabla SET orden = :orden WHERE id = :id");
+        $stmt->bindParam(":orden", $datosModel["ordenItem"], PDO::PARAM_INT);
+        $stmt->bindParam(":id", $datosModel["ordenSlide"], PDO::PARAM_INT);
+        if($stmt->execute()){
+            return "ok";
+        }else{
+            return "else";
+        }
+        $stmt->close();
+    }
+
+    #Mostrar imagenes del slide de acuerdo al orden asignado
+    public function itemSlideOrneadosModel($tabla){
+        $stmt = (new Conexion)->con()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC");
+        $stmt->execute();
+        return $stmt->fetchAll();
+        $stmt->close();
+    }
 }

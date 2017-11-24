@@ -147,3 +147,60 @@ $(".editarSlide").click(function () {
         })
     })
 })
+//Ordenar Item Slide
+var almacenarOrdenID = new Array();
+var ordenItemSlideID = new Array();
+$("#ordenarSlide").click(function(){
+    $("#ordenarSlide").hide();
+    $("#guardarSlide").show();
+    $("#columnasSlide").css({"cursor" : "move"})
+    $("#columnasSlide span").hide();
+    $("#columnasSlide").sortable({
+        revert: true,
+        connectWith: ".bloqueSlide",
+        handle: ".handleImg",
+        stop: function (event) {
+            for(var i = 0; i < $("#columnasSlide li").length; i++){
+                almacenarOrdenID[i] = event.target.children[i].id;
+                console.log(almacenarOrdenID[i]);
+                ordenItemSlideID[i] = i + 1;
+                console.log(ordenItemSlideID[i]);
+            }
+        }
+    })
+})
+$("#guardarSlide").click(function () {
+    $("#columnasSlide").css({"cursor" : "default"})
+    $("#ordenarSlide").show();
+    $("#guardarSlide").hide();
+    $("#columnasSlide span").show();
+    for(var i = 0; i < $("#columnasSlide li").length; i++){
+        var actualizarOrden = new FormData();
+        actualizarOrden.append("ordenSlide", almacenarOrdenID[i]);
+        actualizarOrden.append("ordenItem", ordenItemSlideID[i]);
+        $.ajax({
+            url: "views/assets/ajax/gestorSlide.php",
+            method: "POST",
+            data: actualizarOrden,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (respuesta) {
+                console.log(respuesta);
+                $("#textoSlide ul").html(respuesta);
+                swal({
+                        title: "Correcto!",
+                        text: "Las imagenes se han ordenado",
+                        type: "success",
+                        confirmButtonText: "Cerrar",
+                        CloseOnConfirm: false
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            window.location = "slide"
+                        }
+                    })
+            }
+        })
+    }
+})

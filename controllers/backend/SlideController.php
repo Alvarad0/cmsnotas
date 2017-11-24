@@ -62,4 +62,17 @@ class SlideController{
         $enviarDatos = array("titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
         echo json_encode($enviarDatos);
     }
+
+    #Guardar Orden del Slide
+    public function guardarOrdenItemSlideController($datosController){
+        (new SlideModel)->guardarOrdenItemSlideModel($datosController, "slide");
+        $respuesta = (new SlideModel)->itemSlideOrneadosModel("slide");
+        foreach ($respuesta as $row => $item){
+            echo '<li id="item'.$item["id"].'">
+			      <span class="fa fa-pencil editarSlide" style="background:blue"></span>
+			      <img src="'. substr($item["ruta"], 8) .'" style="float:left; margin-bottom:10px" width="80%">
+			      <h1>'. $item["titulo"]. '</h1>
+			      <p>'. $item["descripcion"] .'</p></li>';
+        }
+    }
 }

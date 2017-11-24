@@ -35,6 +35,14 @@ class Ajax{
         $respuesta = (new SlideController)->actualizarItemSlideController($datos);
         echo $respuesta;
     }
+    #Guardar Orden del Slide
+    public $ordenSlide;
+    public $ordenItem;
+    public function guardarOrdenItemSlideAjax(){
+        $datos = array("ordenSlide" => $this->ordenSlide, "ordenItem" => $this->ordenItem);
+        $respuesta = (new SlideController)->guardarOrdenItemSlideController($datos);
+        echo $respuesta;
+    }
 }
 
 #Objecto Subir Imagen
@@ -60,4 +68,12 @@ if(isset($_POST["id"])){
     $c->titulo = $_POST["titulo"];
     $c->descripcion = $_POST["descripcion"];
     $c->actualizarItemSlideAjax();
+}
+
+#Objecto Guardar Orden Slide
+if(isset($_POST["ordenSlide"])){
+    $d = new Ajax();
+    $d->ordenSlide = $_POST["ordenSlide"];
+    $d->ordenItem = $_POST["ordenItem"];
+    $d->guardarOrdenItemSlideAjax();
 }
