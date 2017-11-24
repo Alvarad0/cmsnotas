@@ -19,8 +19,8 @@ class SlideController{
             $origen = imagecreatefromjpeg($datosController["imagenTemporal"]);
             $destino = imagecrop($origen, ["x" => 0, "y" => 0, "width" => 1600, "height" => 600]);
             imagejpeg($destino, $ruta);
-            (new SlideModel)->subirImagenModel($ruta, "slide");
-            $respuesta = (new SlideModel)->mostrarImagenModel($ruta, "slide");
+            (new SlideModel)->subirImagenModel($ruta);
+            $respuesta = (new SlideModel)->mostrarImagenModel($ruta);
             if(empty($respuesta["titulo"]))
                 $respuesta["titulo"]="";
             if(empty($respuesta["descripcion"]))
@@ -50,7 +50,7 @@ class SlideController{
 
     #Eliminar Item Slide
     public function eliminarItemSlideController($datosController){
-        $respuesta = (new SlideModel)->eliminarItemSlideModel($datosController, "slide");
+        $respuesta = (new SlideModel)->eliminarItemSlideModel($datosController);
         unlink($datosController["rutaSlide"]);
         return $respuesta;
     }
@@ -58,14 +58,14 @@ class SlideController{
     #Actualizar Titulo y Descripcion del Item Slide
     public function actualizarItemSlideController($datosController){
         (new SlideModel)->actualizarItemSlideModel($datosController, "slide");
-        $respuesta = (new SlideModel)->actualizacionItemSlideModel($datosController, "slide");
+        $respuesta = (new SlideModel)->actualizacionItemSlideModel($datosController);
         $enviarDatos = array("titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
         echo json_encode($enviarDatos);
     }
 
     #Guardar Orden del Slide
     public function guardarOrdenItemSlideController($datosController){
-        (new SlideModel)->guardarOrdenItemSlideModel($datosController, "slide");
+        (new SlideModel)->guardarOrdenItemSlideModel($datosController);
         $respuesta = (new SlideModel)->itemSlideOrneadosModel("slide");
         foreach ($respuesta as $row => $item){
             echo '<li id="item'.$item["id"].'">
@@ -78,7 +78,7 @@ class SlideController{
 
     #Mostrar imagenes en el Slide del Fron-End
     public function cargarSlideController(){
-        $respuesta = (new SlideModel)->itemSlideOrneadosModel("slide");
+        $respuesta = (new SlideModel)->itemSlideOrneadosModel();
         foreach ($respuesta as $row => $item){
             echo '<li>
 	           	<img src="'. substr($item["ruta"], 9) .'">
