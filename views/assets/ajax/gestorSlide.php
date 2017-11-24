@@ -26,6 +26,15 @@ class Ajax{
         $respuesta = (new SlideController)->eliminarItemSlideController($datos);
         echo $respuesta;
     }
+    #Actualizar Titulo y Descripción del Item Slide
+    public $id;
+    public $titulo;
+    public $descripcion;
+    public function actualizarItemSlideAjax(){
+        $datos = array("id" => $this->id, "titulo" => $this->titulo, "descripcion" => $this->descripcion);
+        $respuesta = (new SlideController)->actualizarItemSlideController($datos);
+        echo $respuesta;
+    }
 }
 
 #Objecto Subir Imagen
@@ -42,4 +51,13 @@ if(isset($_POST["idSlide"])){
     $b->idSlide = $_POST["idSlide"];
     $b->rutaSlide = $_POST["rutaSlide"];
     $b->eliminarItemSlideAjax();
+}
+
+#Objecto Actualizar Titutlo y Descripcion del Item Slide
+if(isset($_POST["id"])){
+    $c = new Ajax();
+    $c->id = $_POST["id"];
+    $c->titulo = $_POST["titulo"];
+    $c->descripcion = $_POST["descripcion"];
+    $c->actualizarItemSlideAjax();
 }

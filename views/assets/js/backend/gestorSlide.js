@@ -76,6 +76,9 @@ $("#columnasSlide").on("drop", function (e) {
 })
 //Eliminar Slide
     $(".eliminarSlide").click(function () {
+        if($(".eliminarSlide").length == 1){
+            $("#columnasSlide").css({"height" : "100px"});
+        }
         idSlide = $(this).parent().attr("id");
         rutaSlide = $(this).attr("ruta");
         console.log(idSlide)
@@ -96,3 +99,51 @@ $("#columnasSlide").on("drop", function (e) {
             }
         })
     })
+//Editar Slide
+$(".editarSlide").click(function () {
+    idSlide = $(this).parent().attr("id");//Obtener Id al Editar
+    rutaImagen = $(this).parent().children("img").attr("src");
+    tituloImagen = $(this).parent().children("h1").html();
+    descripcionTitulo = $(this).parent().children("p").html();
+    console.log(idSlide)
+    //Obtener Id para Editar
+    $(this).parent().html('<img src="'+ rutaImagen +'" class="img-thumbnail">\n' +
+        ' \t\t\t<input id="tituloSlide" type="text" class="form-control" placeholder="Título" value="'+ tituloImagen +'">\n' +
+        ' \t\t\t<textarea id="descripcionSlide" row="5" class="form-control" placeholder="Descripción">'+ descripcionTitulo +'</textarea>\n' +
+        ' \t\t\t<button id="guardar'+ idSlide +'" class="btn btn-info pull-right" style="margin:10px">Guardar</button>');
+    //Editar Item Slide
+    $("#guardar"+idSlide).click(function () {
+        id = idSlide.slice(4)
+        titulo = $("#tituloSlide").val();
+        descripcion = $("#descripcionSlide").val();
+        var actualizarSlide = new FormData();
+        actualizarSlide.append("id", id);
+        actualizarSlide.append("titulo", titulo);
+        actualizarSlide.append("descripcion", descripcion);
+        $.ajax({
+            url: "views/assets/ajax/gestorSlide.php",
+            method: "POST",
+            data: actualizarSlide,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                console.log(respuesta)
+                $("#guardar"+idSlide).parent().html('<span class="fa fa-pencil editarSlide" style="background: blue"></span><img src="'+ rutaImagen +'" style="float: left; margin-bottom: 10px" width="80%"><h1>'+respuesta["titulo"]+'</h1><p>'+respuesta["descripcion"]+'</p>')
+                swal({
+                        title: "Correcto!",
+                        text: "Los datos se han actualizado",
+                        type: "success",
+                        confirmButtonText: "Cerrar",
+                        CloseOnConfirm: false
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            window.location = "slide"
+                        }
+                    })
+            }
+        })
+    })
+})

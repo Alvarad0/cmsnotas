@@ -45,6 +45,27 @@ class SlideModel{
             return "error";
         }
         $stmt->close();
+    }
 
+    #Actualizar Titulo y Descripcion del Item Slide
+    public function actualizarItemSlideModel($datosModel, $tabla){
+        $stmt = (new Conexion)->con()->prepare("UPDATE $tabla SET titulo = :titulo, descripcion = :descripcion WHERE id = :id");
+        $stmt->bindParam(":titulo", $datosModel["titulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":descripcion", $datosModel["descripcion"], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $datosModel["id"], PDO::PARAM_INT);
+        if($stmt->execute()){
+            return "ok";
+        }else{
+            return "Error";
+        }
+    }
+
+    #Mostrar Actualización de Titulo y Descripción
+    public function actualizacionItemSlideModel($datosModel, $tabla){
+        $stmt = (new Conexion)->con()->prepare("SELECT titulo, descripcion FROM $tabla WHERE id = :id");
+        $stmt->bindParam("id", $datosModel["id"], PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+        $stmt->close();
     }
 }

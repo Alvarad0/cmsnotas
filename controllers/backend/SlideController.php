@@ -42,7 +42,7 @@ class SlideController{
         $respuesta = (new SlideModel)->mostrarImagenesModel("slide");
         foreach ($respuesta as $row => $item)
             echo '<li id="item'.$item["id"].'">
-			      <span class="fa fa-pencil" style="background:blue"></span>
+			      <span class="fa fa-pencil editarSlide" style="background:blue"></span>
 			      <img src="'. substr($item["ruta"], 8) .'" style="float:left; margin-bottom:10px" width="80%">
 			      <h1>'. $item["titulo"]. '</h1>
 			      <p>'. $item["descripcion"] .'</p></li>';
@@ -53,5 +53,13 @@ class SlideController{
         $respuesta = (new SlideModel)->eliminarItemSlideModel($datosController, "slide");
         unlink($datosController["rutaSlide"]);
         return $respuesta;
+    }
+
+    #Actualizar Titulo y Descripcion del Item Slide
+    public function actualizarItemSlideController($datosController){
+        (new SlideModel)->actualizarItemSlideModel($datosController, "slide");
+        $respuesta = (new SlideModel)->actualizacionItemSlideModel($datosController, "slide");
+        $enviarDatos = array("titulo" => $respuesta["titulo"], "descripcion" => $respuesta["descripcion"]);
+        echo json_encode($enviarDatos);
     }
 }
